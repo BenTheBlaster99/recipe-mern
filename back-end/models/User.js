@@ -1,7 +1,4 @@
 const mongoose = require("mongoose");
-const {
-  default: SavedRecipe,
-} = require("../../front-end/src/pages/SavedRecipe");
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -12,6 +9,10 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     require: true,
+  },
+  role: {
+    type: String,
+    default: "user",
   },
   savedRecipes: [{ type: mongoose.Schema.Types.ObjectId, ref: "recipes" }],
 });

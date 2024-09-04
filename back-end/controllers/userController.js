@@ -15,31 +15,31 @@ const register = async (req, res) => {
       username: username,
       password: hashPassword,
     });
-    res.json(user);
+    res.json({ user });
   } catch (erorr) {
     res.status(500).json({ message: error.message });
   }
 };
 
-const login = async (req,res) =>{
-    const {username, password} = req.body;
-    try{
-        //verify if the user already exist
-        const userExist = await User.findOne({username});
-        if(!userExist){
-            return res.status(400).json({message : "invaild user"})
-        } 
-        const isMatch = await bcrypt.compare(password, userExist.password);
-        if(!isMatch){
-            return res.status(400).json({message: "invalid password"})
-        }
-        const token = jwt.sign(
-            {id: userExist._id, role: userExist.role},
-            "secret-key"
-        );
-        res.json({token, message: "user logged in and token sent"})
-    } catch(error){
-        res.status(500).json({message: error.message})
+const login = async (req, res) => {
+  const { username, password } = req.body;
+  try {
+    //verify if the user already exist
+    const userExist = await User.findOne({ username });
+    if (!userExist) {
+      return res.status(400).json({ message: "invaild user" });
     }
-}
-module.exports = {register,login}
+    const isMatch = await bcrypt.compare(password, userExist.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: "invalid password" });
+    }
+    const token = jwt.sign(
+      { id: userExist._id, role: userExist.role },
+      "secret-key"
+    );
+    res.json({ token, message: "user logged in and token sent" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+module.exports = { register, login };

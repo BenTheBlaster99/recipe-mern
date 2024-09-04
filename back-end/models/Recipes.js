@@ -19,9 +19,9 @@ const RecipeSchema = new mongoose.Schema({
   cookingTime: { type: Number, require: true },
   userOwner: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "users",
+    ref: "user-auth",
     required: true,
   },
 });
-const RecipieModel = mongoose.model("recipeis", RecipeSchema);
+const RecipieModel = mongoose.model("recipes", RecipeSchema);
 module.exports = RecipieModel;
