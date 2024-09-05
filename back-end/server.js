@@ -7,7 +7,7 @@ const recipeRoutes = require("./routes/reciepieRoutes");
 const userRoutes = require("./routes/userRoutes");
 
 const corsOptions = {
-  origin: "http://localhost:5174",
+  origin: "http://localhost:5173",
   optionSuccessStatus: 200,
 };
 

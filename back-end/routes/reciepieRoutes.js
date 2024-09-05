@@ -5,6 +5,7 @@ const {
   createNewRecipie,
   saveRecipie,
   getSavedRecipes,
+  unsaveRecipe,
 } = require("../controllers/recipieController");
 const router = express.Router();
 router
@@ -18,6 +19,12 @@ router
 router
   .route("/api/savedRecipes")
   .get(authentication, authorization("user"), getSavedRecipes);
+router
+  .route("/api/savedRecipes/id/:recipeID")
+  .put(authentication, authorization("user"), unsaveRecipe);
+// router
+//   .route("/api/unsavedRecipes")
+//   .delete(authentication, authorization("user"), unsaveRecipe);
 // need another route for the SAVED recipes
 
 //check the routes if its correct + how i could good routes and test them out

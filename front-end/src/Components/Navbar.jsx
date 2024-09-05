@@ -1,16 +1,16 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { userCookies } from "react-cookie";
-import { userNavigate} from "react-router-dom"
+import { useCookies } from "react-cookie";
+
 function Navbar(props) {
-  const [cookies, setCookies] = userCookies(["access_token"]);
-  const navigate = useNavigate()
+  const [cookies, setCookies] = useCookies(["access_token"]);
+  const navigate = useNavigate();
 
   const logout = () => {
-    setCookies("access_token","")
-    window.localStorage.removeItem("userID")
-    navigate("/auth")
-  }
+    setCookies("access_token", "");
+    window.localStorage.removeItem("userID");
+    navigate("/auth");
+  };
   return (
     <div className="navbar">
       <Link to="/">Home</Link>
@@ -19,8 +19,8 @@ function Navbar(props) {
         <Link to="/auth">Login/Register</Link>
       ) : (
         <>
-        <Link to="/savedRecipe">Saved Recipes</Link>
-        <button onClick={logout}>LogOut</button>
+          <Link to="/savedRecipe">Saved Recipes</Link>
+          <button onClick={logout}>LogOut</button>
         </>
       )}
     </div>
