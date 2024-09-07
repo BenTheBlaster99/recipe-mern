@@ -20,12 +20,8 @@ router
   .route("/api/savedRecipes")
   .get(authentication, authorization("user"), getSavedRecipes);
 router
-  .route("/api/savedRecipes/id/:recipeID")
-  .put(authentication, authorization("user"), unsaveRecipe);
-// router
-//   .route("/api/unsavedRecipes")
-//   .delete(authentication, authorization("user"), unsaveRecipe);
-// need another route for the SAVED recipes
+  .route("/api/unsaveRecipes/id/:recipeID")
+  .delete(authentication, authorization("user"), unsaveRecipe);
 
 //check the routes if its correct + how i could good routes and test them out
 module.exports = router;

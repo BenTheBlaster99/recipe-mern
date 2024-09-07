@@ -18,6 +18,8 @@ function Home() {
           headers: { Authorization: "Bearer " + cookies.access_token },
         });
         setRecipes([...response.data.savedRecipes]);
+
+        setSavedRecipes(savedResponse.data.savedRecipes);
       } catch (error) {
         console.error(error);
       }
@@ -42,7 +44,15 @@ function Home() {
     }
   };
 
-  const isRecipeSaved = (id) => savedRecipes.includes(id);
+  const isRecipeSaved = (id) =>
+    savedRecipes.some((recipe) => recipe._id === id);
+  // const handleCreateRecipe = () =>{
+  //   if(!cookies.access_token){
+  //     alert("you need to log in to create a recipe!");
+  //     return;
+  //   }
+  //   window.location.href = '/createRecipie'
+  // }
   const handleDetailClick = (recipe) => {
     console.log("detail button clicked, recipe:", recipe);
     setSelectedRecipe(recipe);

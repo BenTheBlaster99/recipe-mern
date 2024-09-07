@@ -71,11 +71,12 @@ const getSavedRecipes = async (req, res) => {
 };
 const unsaveRecipe = async (req, res) => {
   try {
-    const { recipeID } = req.params;
     const user = await UserModel.findById(req.user.id);
+
     user.savedRecipes = user.savedRecipes.filter(
-      (id) => id.toString() !== recipeID
+      (recipe) => recipe.toString() !== req.params.recipeID
     );
+
     await user.save();
     res.status(200).json({
       message: "Recipe unsaved Successfully",

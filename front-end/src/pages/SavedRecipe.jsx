@@ -9,7 +9,6 @@ function SavedRecipe() {
   const userID = UseGetUserID();
   useEffect(() => {
     const fetchSavedRecipe = async () => {
-      console.log(userID);
       try {
         const response = await axios.get(`//localhost:3000/api/savedRecipes`, {
           headers: { Authorization: "Bearer " + cookies.access_token },
@@ -27,14 +26,16 @@ function SavedRecipe() {
 
   const unsaveRecipe = async (recipeID) => {
     try {
-      const response = await axios.put(
-        `//localhost:3000/api/savedRecipes/${recipeID}`,
+      const response = await axios.delete(
+        `//localhost:3000/api/unsaveRecipes/id/${recipeID}`,
 
         {
           headers: { Authorization: "Bearer " + cookies.access_token },
         }
       );
-      setSavedRecipes(response.data.savedRecipes);
+      setSavedRecipes((prevRecipes) =>
+        prevRecipes.filter((recipe) => recipe._id !== recipeID)
+      );
     } catch (error) {
       console.error(error);
       console.log("unsaving didnt happen");
@@ -45,23 +46,28 @@ function SavedRecipe() {
     <div>
       <h2>Saved Recipes</h2>
       <ul>
-        {savedRecipes.map((recipe) => (
-          <li key={recipe._id}>
-            <div>
-              <h2>{recipe.name}</h2>
-            </div>
-            <div className="instructions">
-              <p>{recipe.instructions}</p>
-            </div>
-            <img src={recipe.imageUrl} alt={recipe.name} />
-            <p>Cooking Time : {recipe.cookingTime} minutes</p>
-            <input
-              type="button"
-              value="Unsave"
-              onClick={() => unsaveRecipe(recipe._id)}
-            />
-          </li>
-        ))}
+        {savedRecipes &&
+          savedRecipes.length > 0 &&
+          savedRecipes.map((recipe) => (
+            <li key={recipe._id}>
+              <div>
+                <h2>{recipe.name}</h2>
+              </div>
+              <div className="instructions">
+                <p>{recipe.instructions}</p>
+              </div>
+              <img src={recipe.imageUrl} alt={recipe.name} />
+              <p>Cooking Time : {recipe.cookingTime} minutes</p>
+              <input
+                type="button"
+                value="Unsave"
+                onClick={(e) => {
+                  e.preventDefault();
+                  unsaveRecipe(recipe._id);
+                }}
+              />
+            </li>
+          ))}
       </ul>
     </div>
   );
